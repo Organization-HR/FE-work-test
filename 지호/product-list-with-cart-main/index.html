@@ -162,6 +162,9 @@
           () => {
             addToCart(product.name, product.price, button, productQuantity);
           },
+          () => {
+            minusCart(product.name, productQuantity);
+          },
           productQuantity
         );
 
@@ -190,8 +193,7 @@
         }
         updateCartDisplay();
         // Update button text
-        button.setText(`Add More (${productQuantity})`);
-        return productQuantity;
+        //button.setText(`Add More (${productQuantity})`);
       }
 
       function minusCart(name, productQuantity) {
@@ -199,9 +201,14 @@
         if (existingProduct) {
           existingProduct.quantity -= 1;
           productQuantity = existingProduct.quantity;
+          if (existingProduct.quantity < 1) {
+            cart = cart.filter((item) => item.name !== name);
+          }
+          cartQuantity.textContent = cart.length; // Update cart quantity here
           updateCartDisplay();
         }
       }
+
       function updateCartDisplay() {
         cartItems.innerHTML = "";
         cart.forEach((item) => {
