@@ -26,11 +26,18 @@
     <div id="cart">
       Your Cart (<span id="cart-quantity">0</span>)
       <div id="cart-items">Your added items will appear here</div>
+      <button id="order-button" style="display: none">Order</button>
     </div>
     <div class="attribution">
       Challenge by
       <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
       Coded by <a href="#">Your Name Here</a>.
+    </div>
+    <div id="order-modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Your order has been placed!</p>
+      </div>
     </div>
     <script id="data-json" type="application/json">
       [
@@ -140,6 +147,9 @@
       const productList = document.getElementById("product-list");
       const cartQuantity = document.getElementById("cart-quantity");
       const cartItems = document.getElementById("cart-items");
+      const orderButton = document.getElementById("order-button");
+      const orderModal = document.getElementById("order-modal");
+      const closeModal = document.getElementsByClassName("close")[0];
       let cart = [];
 
       // Parse JSON data from script tag
@@ -230,7 +240,31 @@
           cartItem.appendChild(minusButton);
           cartItems.appendChild(cartItem);
         });
+
+        // Show or hide the order button based on cart quantity
+        if (cart.length > 0) {
+          orderButton.style.display = "block";
+        } else {
+          orderButton.style.display = "none";
+        }
       }
+
+      // Event listener for order button
+      orderButton.addEventListener("click", () => {
+        orderModal.style.display = "block";
+      });
+
+      // Event listener for close button on modal
+      closeModal.addEventListener("click", () => {
+        orderModal.style.display = "none";
+      });
+
+      // Close the modal if the user clicks outside of it
+      window.addEventListener("click", (event) => {
+        if (event.target == orderModal) {
+          orderModal.style.display = "none";
+        }
+      });
     </script>
   </body>
 </html>
