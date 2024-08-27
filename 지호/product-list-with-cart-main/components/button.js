@@ -9,7 +9,7 @@ class CartButton {
       minusClick();
       this.handleMinusClick();
     };
-    this.quantity = 0; // Initialize quantity
+    this.quantity = quantity; // Initialize quantity
   }
 
   handleAddClick() {
@@ -33,11 +33,13 @@ class CartButton {
         this.buttonElement.style.display = "none";
         this.incrementButton.style.display = "inline-block";
         this.decrementButton.style.display = "inline-block";
+        this.quantityElement.style.display = "inline-block";
       } else {
         this.buttonElement.style.display = "inline-block";
         this.buttonElement.textContent = `₩${this.label} ${this.quantity}`;
         this.incrementButton.style.display = "none";
         this.decrementButton.style.display = "none";
+        this.quantityElement.style.display = "none";
       }
     }
   }
