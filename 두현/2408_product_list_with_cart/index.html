@@ -7,45 +7,97 @@
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   <link rel="stylesheet" href="styles.css">
   <title>Frontend Mentor | Product list with cart</title>
-
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
 </head>
 <body>
   <h1>Desserts</h1>
   <div id="item-list"></div>
 
+  <!-- <div class="item-card__container">
+    <div>
+      <img src="./assets/images/image-waffle-desktop.jpg" alt="${item.title}" class="item-card__image">
+      <button>Add to Cart</button>
+    </div>
+    <p class="item-card__category">Waffle</p>
+    <h4 class="item-card__title">ㅋㅋㅋ</h4>
+    <p class="item-card__price">ㅋㅋㅋ</p>
+  </div> -->
 
   <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+    Coded by <a href="https://github.com/ldhldh07">ldhldh07</a>.
   </div>
   
   <script>
-    const itemListElement = document.getElementById('item-list')
-    async function loadItems() {
-      try {
-        const response = await fetch('./data.json');
-        if(!response.ok){
-          throw new Error('fetch 에러')
-        }
-        const itemListData = await response.json();
-        itemListData.forEach(item => {
-          itemListElement.innerHTML += `
-            <div class="item-card__container">
-              <img src="${item.image.desktop}" alt="${item.title}" class="item-card__image">
+    document.addEventListener('DOMContentLoaded', () => {
+      const itemListElement = document.getElementById('item-list');
+
+      async function loadItems() {
+        try {
+          const response = await fetch('./data.json');
+          if (!response.ok) {
+            throw new Error('fetch 에러');
+          }
+          const itemListData = await response.json();
+          
+          itemListData.forEach(item => {
+            const itemCardContainer = document.createElement('div');
+            itemCardContainer.className = 'item-card__container';
+            
+            let counts = 1;
+            itemCardContainer.innerHTML = `
+              <div class="item-card__image-container">
+                <img src="${item.image.desktop}" alt="${item.title}" class="item-card__image">
+                <div class="item-card__controls">
+                  <button class="minus" style="display:none">-</button>
+                  <span class="quantity" style="display:none">${counts}</span>
+                  <button class="plus" style="display:none">+</button>
+                  <button class="add-to-cart">Add to Cart</button>
+                </div>
+              </ div>
               <p class="item-card__category">${item.category}</p>
-              <h4 class="item-card__title">${item.title}</h4>
+              <h4 class="item-card__title">${item.name}</h4>
               <p class="item-card__price">$${item.price}</p>
-            </div>
-          `
-        });
-      } catch(error) { console.log(error.message)}
-    }
-    loadItems();
+            `;
+
+            const addButton = itemCardContainer.querySelector('.add-to-cart');
+            const minusButton = itemCardContainer.querySelector('.minus');
+            const plusButton = itemCardContainer.querySelector('.plus');
+            const quantitySpan = itemCardContainer.querySelector('.quantity');
+
+            addButton.addEventListener('click', () => {
+              addButton.style.display = 'none';
+              minusButton.style.display = 'inline-block';
+              plusButton.style.display = 'inline-block';
+              quantitySpan.style.display = 'inline-block';
+            });
+
+            plusButton.addEventListener('click', () => {
+              counts += 1;
+              quantitySpan.textContent = counts;
+            });
+
+            minusButton.addEventListener('click', () => {
+              if (counts === 1) {
+                minusButton.style.display = 'none';
+                plusButton.style.display = 'none';
+                quantitySpan.style.display = 'none';
+                addButton.style.display = 'inline-block';
+                counts = 1;
+              } else {
+                counts -= 1;
+                quantitySpan.textContent = counts;
+              } 
+            });
+
+            itemListElement.appendChild(itemCardContainer);
+          });
+        } catch (error) {
+          console.log(error.message);
+        }
+      }
+
+      loadItems();
+    });
   </script>
 </body>
 </html>
