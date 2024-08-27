@@ -2,7 +2,7 @@ import React from "react";
 import Button from "../common/button";
 import TextField from "../common/textfield";
 
-const Calculator = () => {
+const InputSection = () => {
   return (
     <div>
       <div>
@@ -16,4 +16,4 @@ const Calculator = () => {
   );
 };
 
-export default Calculator;
+export default InputSection;

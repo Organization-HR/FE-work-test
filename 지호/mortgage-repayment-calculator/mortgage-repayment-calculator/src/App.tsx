@@ -1,19 +1,16 @@
 import tw from "twin.macro";
-import Result from "./components/calculator/result";
-import Calculator from "./components/calculator/calculator";
+import Calculator from "./components/calculator";
 
 const App = () => {
   return (
-    <>
-      <Test>Test Div</Test>
+    <Wrapper>
       <Calculator />
-      <Result />
-    </>
+    </Wrapper>
   );
 };
 
-const Test = tw.div`
-  bg-red-500
+const Wrapper = tw.div`
+  flex items-center justify-center h-screen
 `;
 
 export default App;

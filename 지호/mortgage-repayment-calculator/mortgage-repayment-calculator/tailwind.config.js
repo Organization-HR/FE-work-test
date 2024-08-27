@@ -34,15 +34,6 @@ module.exports = {
         white: "#ffffff",
         black: "#000000",
 
-        green: {
-          1: "#022137",
-          2: "#0E3C49",
-          3: "#2D6D67",
-          4: "#1BC4C9",
-          5: "#35EDD4",
-          6: "#B8FFE1",
-          7: "#F6FEEF",
-        },
         gray: {
           0: "#EEEEEE",
           50: "#F8F9FA",
@@ -56,12 +47,12 @@ module.exports = {
           800: "#3C4043",
           900: "#202124",
         },
-        scarlet: "#FF6258",
-        amber: "#FF9900",
-        violet: "#9D50E5",
+
+        skyblue: "#e6f7ff",
         blue: "#2E81FF",
-        etc1: "#3384FF",
-        logo: "#00FF00",
+        yellow: "#FFFF66",
+        green: "#1B2E3C",
+        darkgreen: "#0F1C24",
       },
 
       fontFamily: {

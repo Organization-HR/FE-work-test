@@ -1,6 +1,6 @@
 import React from "react";
 
-const Result = () => {
+const ResultSection = () => {
   return (
     <div>
       <h1>Mortgage Repayment Calculator</h1>
@@ -8,4 +8,4 @@ const Result = () => {
   );
 };
 
-export default Result;
+export default ResultSection;
