@@ -20,9 +20,6 @@
   </div>
   
   <script>
-    /**
-     * 아이템  
-     **/
     const itemListElement = document.getElementById('item-list');
     
     async function loadItems() {
@@ -38,25 +35,61 @@
           itemCardContainer.className = 'item-card__container';
           
           let counts = 0;
-          itemCardContainer.innerHTML = `
-            <div class="item-card__image-container">
-              <img src="${item.image.desktop}" alt="${item.title}" class="item-card__image">
-              <div class="item-card__controls">
-                <button class="minus" style="display:none">-</button>
-                <span class="quantity" style="display:none">${counts}</span>
-                <button class="plus" style="display:none">+</button>
-                <button class="add-to-cart">Add to Cart</button>
-              </div>
-            </ div>
-            <p class="item-card__category">${item.category}</p>
-            <h4 class="item-card__title">${item.name}</h4>
-            <p class="item-card__price">$${item.price.toFixed(2)}</p>
-          `;
 
-          const addButton = itemCardContainer.querySelector('.add-to-cart');
-          const minusButton = itemCardContainer.querySelector('.minus');
-          const plusButton = itemCardContainer.querySelector('.plus');
-          const quantitySpan = itemCardContainer.querySelector('.quantity');
+          const imageContainer = document.createElement('div');
+          imageContainer.className = 'item-card__image-container';
+
+          const img = document.createElement('img');
+          img.src = item.image.desktop;
+          img.alt = item.title;
+          img.className = 'item-card__image';
+          imageContainer.appendChild(img);
+
+          const controlsContainer = document.createElement('div');
+          controlsContainer.className = 'item-card__controls';
+
+          const minusButton = document.createElement('button');
+          minusButton.className = 'minus';
+          minusButton.style.display = 'none';
+          minusButton.textContent = '-';
+
+          const plusButton = document.createElement('button');
+          plusButton.className = 'plus';
+          plusButton.style.display = 'none';
+          plusButton.textContent = '+';
+
+          const quantitySpan = document.createElement('span');
+          quantitySpan.className = 'quantity';
+          quantitySpan.style.display = 'none';
+          quantitySpan.textContent = counts;
+
+          const addButton = document.createElement('button');
+          addButton.className = 'add-to-cart';
+          addButton.textContent = 'Add to Cart';
+
+          controlsContainer.appendChild(minusButton);
+          controlsContainer.appendChild(quantitySpan);
+          controlsContainer.appendChild(plusButton);
+          controlsContainer.appendChild(addButton);
+
+          imageContainer.appendChild(controlsContainer);
+
+          const category = document.createElement('p');
+          category.className = 'item-card__category';
+          category.textContent = item.category;
+
+          const title = document.createElement('h4');
+          title.className = 'item-card__title';
+          title.textContent = item.name;
+
+          const price = document.createElement('p');
+          price.className = 'item-card__price';
+          price.textContent = `$${item.price.toFixed(2)}`;
+
+          itemCardContainer.appendChild(imageContainer);
+          itemCardContainer.appendChild(category);
+          itemCardContainer.appendChild(title);
+          itemCardContainer.appendChild(price);
 
           addButton.addEventListener('click', () => {
             addButton.style.display = 'none';
@@ -98,6 +131,7 @@
             }
             updateCart();
           });
+
           itemListElement.appendChild(itemCardContainer);
         });
       } catch (error) {
@@ -105,34 +139,53 @@
       }
     }
 
+    /**
+     * 카트
+     **/
     const cartElement = document.getElementById("cart");
 
     let cartState = {};
 
     function updateCart() {
       cartElement.innerHTML = '';
-      const cartItem = document.createElement('div');
+      const cartItemContainer = document.createElement('div');
       const cartTitle = document.createElement('p');
       
       const totalCartCount = Object.values(cartState).reduce((acc, item) => acc + item.quantity, 0);
       
       cartTitle.textContent = `Your Cart (${totalCartCount})`;
-      cartItem.appendChild(cartTitle);
+      cartItemContainer.appendChild(cartTitle);
 
-      Object.values(cartState).forEach(item => {
-        if(item.quantity !== 0) {
+      Object.values(cartState).forEach(addedCartItem => {
+        if(addedCartItem.quantity !== 0) {
           const cartItemElement = document.createElement('div');
           cartItemElement.className = 'cart-item';
-          cartItemElement.innerHTML = `
-            <p>${item.name}</p>
-            <span>${item.quantity}x</span>
-            <span>${item.price.toFixed(2)} ${(item.quantity * item.price).toFixed(2)}</span>
-            <button class="remove-item" data-name="${item.name}">x</button>
-          `;
-          cartItem.appendChild(cartItemElement);
+
+          const itemName = document.createElement('p');
+          itemName.textContent = addedCartItem.name;
+
+          const itemQuantity = document.createElement('span');
+          itemQuantity.textContent = `${addedCartItem.quantity}x`;
+
+          const itemPrice = document.createElement('span');
+          itemPrice.textContent = `$${addedCartItem.price.toFixed(2)} ($${(addedCartItem.quantity * addedCartItem.price).toFixed(2)})`;
+
+          const removeButton = document.createElement('button');
+          removeButton.className = 'remove-item';
+          removeButton.textContent = 'x';
+          removeButton.setAttribute('data-name', addedCartItem.name);
+
+          cartItemElement.appendChild(itemName);
+          cartItemElement.appendChild(itemQuantity);
+          cartItemElement.appendChild(itemPrice);
+          cartItemElement.appendChild(removeButton);
+
+          cartItemContainer.appendChild(cartItemElement);
         }
       });
-      const removeButtons = cartItem.querySelectorAll('.remove-item')
+      cartElement.appendChild(cartItemContainer);
+
+      const removeButtons = cartItemContainer.querySelectorAll('.remove-item');
       removeButtons.forEach(button => {
         button.addEventListener('click', (event) => {
           const itemName = event.target.getAttribute('data-name');
@@ -157,16 +210,34 @@
           updateCart();
         });
       });
-      cartElement.appendChild(cartItem);
 
       const totalCost = Object.values(cartState).reduce((acc, cartItem) => acc + cartItem.quantity * cartItem.price, 0);
-      const costElement = document.createElement('div')
-      costElement.innerText = `$${totalCost.toFixed(2)}`;
-      cartElement.appendChild(costElement)
+      const costElement = document.createElement('div');
+      costElement.className = 'cost-element'; 
+
+      const totalCostLabel = document.createElement('span');
+      totalCostLabel.innerText = "Order Total: ";
+
+      const totalCostResult = document.createElement('span');
+      totalCostResult.innerText = `$${totalCost.toFixed(2)}`;
+
+      costElement.appendChild(totalCostLabel);
+      costElement.appendChild(totalCostResult);
+      cartElement.appendChild(costElement);
+
+      const submitButtonContainer = document.createElement('div');
+      const submitButton = document.createElement('button');
+      submitButton.className = "cart__submit-button";
+      submitButton.textContent = "Confirm Order"
+
+      submitButtonContainer.appendChild(submitButton)
+      
+      cartElement.appendChild(submitButtonContainer)
+
     }
 
     loadItems();
-    updateCart()
+    updateCart();
   </script>
 </body>
 </html>

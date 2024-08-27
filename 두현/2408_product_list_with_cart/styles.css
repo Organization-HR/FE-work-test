@@ -21,3 +21,10 @@
 .item-card__container .item-card__category {
     color: gray
 }
+
+.cost-element {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
