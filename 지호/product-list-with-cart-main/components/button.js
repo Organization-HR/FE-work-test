@@ -47,16 +47,19 @@ class CartButton {
 
     const button = document.createElement("button");
     button.textContent = `₩${this.label} ${this.quantity}`;
+    button.classList.add("main-button");
     button.addEventListener("click", this.addClick);
     this.buttonElement = button;
 
     const decrementButton = document.createElement("button");
     decrementButton.textContent = "-";
+    decrementButton.classList.add("quantity-button");
     decrementButton.addEventListener("click", this.minusClick);
     this.decrementButton = decrementButton;
 
     const incrementButton = document.createElement("button");
     incrementButton.textContent = "+";
+    incrementButton.classList.add("quantity-button");
     incrementButton.addEventListener("click", this.addClick);
     this.incrementButton = incrementButton;
 

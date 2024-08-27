@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css" />
     <link
       rel="icon"
       type="image/png"
@@ -21,17 +22,16 @@
     </style>
   </head>
   <body>
-    <h1>Desserts</h1>
-    <div id="product-list"></div>
-    <div id="cart">
-      Your Cart (<span id="cart-quantity">0</span>)
-      <div id="cart-items">Your added items will appear here</div>
-      <button id="order-button" style="display: none">Order</button>
-    </div>
-    <div class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
-      Coded by <a href="#">Your Name Here</a>.
+    <div id="wrapper">
+      <div id="product-list-container">
+        <h1>Desserts</h1>
+        <div id="product-list"></div>
+      </div>
+      <div id="cart">
+        Your Cart (<span id="cart-quantity">0</span>)
+        <div id="cart-items">Your added items will appear here</div>
+        <button id="order-button" style="display: none">Order</button>
+      </div>
     </div>
     <div id="order-modal" class="modal">
       <div class="modal-content">
@@ -159,6 +159,7 @@
       products.forEach((product) => {
         let productQuantity = 0;
         const productDiv = document.createElement("div");
+        productDiv.classList.add("product");
         const buttonDiv = document.createElement("div");
 
         // Check if the product is already in the cart
@@ -181,7 +182,9 @@
         buttonDiv.appendChild(button.render());
         productDiv.innerHTML = `
           <img src="${product.image.thumbnail}" alt="${product.name}">
-          ${product.name} ${product.category} ${product.price.toFixed(2)}
+          <div class="category">${product.category}</div>
+          <div class="name">${product.name}</div>
+          <div class="price">$${product.price.toFixed(2)}</div>
         `;
         productDiv.appendChild(buttonDiv);
         productList.appendChild(productDiv);
