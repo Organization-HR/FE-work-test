@@ -17,3 +17,7 @@
 .item-card__container img {
     max-width: 100%;
 }
+
+.item-card__container .item-card__category {
+    color: gray
+}
