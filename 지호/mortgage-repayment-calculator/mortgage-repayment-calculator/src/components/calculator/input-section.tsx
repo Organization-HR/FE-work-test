@@ -5,6 +5,7 @@ import MoneyTextField from "../common/textfield/money-textfield";
 import PercentTextField from "../common/textfield/percent-textfield";
 import YearTextField from "../common/textfield/year-textfield";
 import tw from "twin.macro";
+import { IconCalculator } from "../icon";
 
 const InputSection = () => {
   const [checkedRadio, setCheckedRadio] = React.useState<boolean[]>([]);
@@ -34,14 +35,16 @@ const InputSection = () => {
             />
           ))}
         </MortgageType>
-        <Button />
+        <ButtonBox>
+          <Button icon={<IconCalculator />} text="Calculate Repayments" />
+        </ButtonBox>
       </Contents>
     </Wrapper>
   );
 };
 
 const Wrapper = tw.div`
-  flex flex-col gap-8
+  flex flex-col gap-8 p-24 w-full
 `;
 
 const Title = tw.h1`
@@ -62,6 +65,10 @@ const MortgageType = tw.div`
 
 const TypeTitle = tw.div`
   font-l-m text-green
+`;
+
+const ButtonBox = tw.div`
+  flex mt-8
 `;
 
 export default InputSection;

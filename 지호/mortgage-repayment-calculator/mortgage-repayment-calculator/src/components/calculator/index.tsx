@@ -12,7 +12,7 @@ const Calculator = () => {
 };
 
 const Wrapper = tw.div`
-  flex w-full flex-col bg-white rounded-24 p-24 
+  flex w-full flex-col bg-white rounded-24
   md:(flex-row w-848)
 `;
 

@@ -50,7 +50,7 @@ module.exports = {
 
         skyblue: "#e6f7ff",
         blue: "#2E81FF",
-        yellow: "#FFFF66",
+        yellow: "#E5E55A",
         green: "#1B2E3C",
         darkgreen: "#0F1C24",
       },
