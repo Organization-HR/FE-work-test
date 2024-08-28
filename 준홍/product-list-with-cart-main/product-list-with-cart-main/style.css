@@ -103,19 +103,6 @@ body {
   gap: 20px;
 }
 
-.add-to-cart::before {
-  content: "";
-  display: inline-block;
-  min-width: 20px;
-  min-height: 20px;
-  max-height: 100%;
-  max-width: 100%;
-  background-image: url("./assets/images/icon-add-to-cart.svg");
-  background-size: contain; /* 또는 cover로 시도 */
-  background-repeat: no-repeat;
-  background-position: center; /* 이미지를 중앙에 배치 */
-}
-
 .added-to-cart {
   width: 50%;
   position: absolute;
@@ -142,8 +129,14 @@ body {
   cursor: pointer;
 }
 
+.item-info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
 .item-title {
-  font-size: 14px;
+  font-size: 13px;
   color: rgb(192, 180, 180);
 }
 
@@ -153,8 +146,14 @@ body {
 }
 
 .item-money {
-  font-size: 16px;
+  font-size: 17px;
   color: coral;
+}
+
+.item-title,
+.item-explain,
+.item-money {
+  margin: 0;
 }
 
 /* 오른쪽 */
@@ -165,6 +164,10 @@ body {
   border-radius: 15px;
   padding: 20px;
   min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
 }
 
 .cart-title {
@@ -194,6 +197,53 @@ body {
   background-image: url("./assets/images/icon-remove-item.svg");
   background-repeat: no-repeat;
   background-position: center;
+  cursor: pointer;
+}
+
+.cart-status {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.empty-list {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.total-price-wrapper {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.total-price-wrapper :first-child {
+  font-size: 14px;
+}
+
+.total-price-wrapper :last-child {
+  font-size: 20px;
+  color: coral;
+}
+
+.carbon-neutral-wrapper {
+  background-color: rgb(253, 248, 240);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.carbon-neutral-comment {
+  font-family: "RedHat_SB";
+  font-size: 14px;
+}
+
+.carbon-neutral-comment > span {
+  font-family: "RedHat_B";
 }
 
 .confirm-button {
@@ -203,4 +253,6 @@ body {
   border: none;
   background-color: brown;
   color: white;
+  cursor: pointer;
+  display: none;
 }
