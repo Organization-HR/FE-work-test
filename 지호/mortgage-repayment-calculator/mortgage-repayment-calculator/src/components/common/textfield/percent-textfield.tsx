@@ -22,6 +22,10 @@ const PercentTextField = ({
   ...rest
 }: Props) => {
   const [inputValue, setInputValue] = useState(value);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // 숫자와 소수점 이외의 문자를 제거
@@ -48,8 +52,14 @@ const PercentTextField = ({
     <Wrapper>
       <InputTitle>{title}</InputTitle>
       <InputWrapper error={error} value={value as string}>
-        <Input {...rest} value={inputValue} onChange={handleChange} />
-        <Tag>{label ?? "%"}</Tag>
+        <Input
+          {...rest}
+          value={inputValue}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+        <Tag focus={isFocused}>{label ?? "%"}</Tag>
       </InputWrapper>
       {amount && (
         <CaptionText error={error}>
@@ -93,9 +103,14 @@ const Input = tw.input`
   focus-visible:(outline-none)
 `;
 
-const Tag = tw.div`
-  flex py-12 px-16 rounded-r-8 font-m-b bg-skyblue
-`;
+interface TagProps {
+  focus: boolean;
+}
+
+const Tag = styled.div<TagProps>(({ focus }) => [
+  tw`flex py-12 px-16 rounded-r-8 font-m-b bg-skyblue`,
+  focus && tw`bg-yellow`,
+]);
 
 interface CaptionTextProps {
   error: boolean | undefined;

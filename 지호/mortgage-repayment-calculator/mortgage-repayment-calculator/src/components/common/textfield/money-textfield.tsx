@@ -23,7 +23,13 @@ const MoneyTextField = ({
 }: Props) => {
   // 천 단위로 콤마 찍힌 값
   const [formattedValue, setFormattedValue] = useState(value);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
+
   // 숫자 이외의 문자를 제거한 값
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [rawValue, setRawValue] = useState(value);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,8 +50,14 @@ const MoneyTextField = ({
     <Wrapper>
       <InputTitle>{title}</InputTitle>
       <InputWrapper error={error} value={value as string}>
-        <Tag>{label ?? "£"}</Tag>
-        <Input {...rest} value={formattedValue} onChange={handleChange} />
+        <Tag focus={isFocused}>{label ?? "£"}</Tag>
+        <Input
+          {...rest}
+          value={formattedValue}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
       </InputWrapper>
       {amount && (
         <CaptionText error={error}>
@@ -89,9 +101,14 @@ const Input = tw.input`
   focus-visible:(outline-none)
 `;
 
-const Tag = tw.div`
-  flex py-12 px-16 rounded-l-8 font-m-b bg-skyblue
-`;
+interface TagProps {
+  focus: boolean;
+}
+
+const Tag = styled.div<TagProps>(({ focus }) => [
+  tw`flex py-12 px-16 rounded-l-8 font-m-b bg-skyblue`,
+  focus && tw`bg-yellow`,
+]);
 
 interface CaptionTextProps {
   error: boolean | undefined;
