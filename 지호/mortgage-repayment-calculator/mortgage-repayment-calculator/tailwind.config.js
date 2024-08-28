@@ -226,6 +226,7 @@ module.exports = {
         ".font-m-m": { fontSize: "14px", lineHeight: "18px", fontWeight: 500 },
         ".font-m-2m": { fontSize: "14px", lineHeight: "22px", fontWeight: 500 },
         ".font-m-b": { fontSize: "14px", lineHeight: "18px", fontWeight: 600 },
+        ".font-m-2b": { fontSize: "14px", lineHeight: "22px", fontWeight: 600 },
 
         ".font-l-r": { fontSize: "16px", lineHeight: "20px", fontWeight: 400 },
         ".font-l-2r": { fontSize: "16px", lineHeight: "26px", fontWeight: 400 },
