@@ -27,12 +27,35 @@
     <!-- 오른쪽 목록 -->
     <div class="right-container">
       <h2 class="cart-title">
-        your Cart (<span class="cart-list-size"></span>)
+        your Cart (<span class="cart-list-size">0</span>)
       </h2>
       <ul class="cart-list">
         <!-- 아이템 목록들 추가 -->
       </ul>
-      <button class="confirm-button">Confirm Order</button>
+      <div class="cart-status">
+        <div class="empty-list">
+          <img
+            src="./assets/images/illustration-empty-cart.svg"
+            class="empty-image"
+          />
+          <span class="empty-message">Your added items will appear here</span>
+        </div>
+        <div class="total-price-wrapper">
+          <span>Order Total</span>
+          <span>$0</span>
+        </div>
+        <div class="carbon-neutral-wrapper">
+          <img
+            src="./assets/images/icon-carbon-neutral.svg"
+            alt="carbon-neutral"
+            class="carbon-neutral-image"
+          />
+          <p class="carbon-neutral-comment">
+            This is a <span>carbon-neutral</span> delivery
+          </p>
+        </div>
+        <button class="confirm-button">Confirm button</button>
+      </div>
     </div>
 
     <script src="script.js"></script>
