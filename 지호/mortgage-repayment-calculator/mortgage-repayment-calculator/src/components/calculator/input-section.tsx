@@ -1,20 +1,33 @@
 import React from "react";
 import Button from "../common/button/button";
 import RadioButton from "../common/button/radio-button";
-import MoneyTextField from "../common/textfield/money-textfield";
-import PercentTextField from "../common/textfield/percent-textfield";
-import YearTextField from "../common/textfield/year-textfield";
 import tw from "twin.macro";
 import { IconCalculator } from "../icon";
+import TextField from "../common/textfield/textfield";
 
-const InputSection = () => {
-  const [checkedRadio, setCheckedRadio] = React.useState<boolean[]>([]);
-  const handleCheckedRadio = (index: number) => {
-    const newChecked = new Array(checkedRadio.length).fill(false);
-    newChecked[index] = true;
-    setCheckedRadio(newChecked);
-  };
+interface InputSectionProps {
+  mortgageAmount: string;
+  mortgageTerm: string;
+  interestRate: string;
+  handleChangeMortgageAmount: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeMortgageTerm: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleChangeInterestRate: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checkedRadio: boolean[];
+  handleCheckedRadio: (index: number) => void;
+  calculateMonthlyRepayment: () => void;
+}
 
+const InputSection = ({
+  mortgageAmount,
+  mortgageTerm,
+  interestRate,
+  handleChangeMortgageAmount,
+  handleChangeMortgageTerm,
+  handleChangeInterestRate,
+  checkedRadio,
+  handleCheckedRadio,
+  calculateMonthlyRepayment,
+}: InputSectionProps) => {
   return (
     <Wrapper>
       <Header>
@@ -22,10 +35,28 @@ const InputSection = () => {
         <ClearButton>Clear All</ClearButton>
       </Header>
       <Contents>
-        <MoneyTextField title="Mortgage Amount" />
+        <TextField
+          title="Mortgage Amount"
+          label="£"
+          textfieldType="left"
+          value={mortgageAmount}
+          handleChange={handleChangeMortgageAmount}
+        />
         <InputBox>
-          <YearTextField title="Mortgage Term" />
-          <PercentTextField title="Interest Rate" />
+          <TextField
+            title="Mortgage Term"
+            label="Year"
+            textfieldType="right"
+            value={mortgageTerm}
+            handleChange={handleChangeMortgageTerm}
+          />
+          <TextField
+            title="Interest Rate"
+            label="%"
+            textfieldType="right"
+            value={interestRate}
+            handleChange={handleChangeInterestRate}
+          />
         </InputBox>
         <MortgageType>
           <TypeTitle>Mortgage Type</TypeTitle>
@@ -39,7 +70,11 @@ const InputSection = () => {
           ))}
         </MortgageType>
         <ButtonBox>
-          <Button icon={<IconCalculator />} text="Calculate Repayments" />
+          <Button
+            icon={<IconCalculator />}
+            text="Calculate Repayments"
+            onClick={calculateMonthlyRepayment}
+          />
         </ButtonBox>
       </Contents>
     </Wrapper>
