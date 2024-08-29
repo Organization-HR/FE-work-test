@@ -17,7 +17,10 @@ const InputSection = () => {
 
   return (
     <Wrapper>
-      <Title>Mortgage Calculator</Title>
+      <Header>
+        <Title>Mortgage Calculator</Title>
+        <ClearButton>Clear All</ClearButton>
+      </Header>
       <Contents>
         <MoneyTextField title="Mortgage Amount" />
         <InputBox>
@@ -44,19 +47,31 @@ const InputSection = () => {
 };
 
 const Wrapper = tw.div`
-  flex flex-col gap-8 p-24 w-full
+  flex flex-col gap-8 p-24 md:(w-full)
+`;
+
+const Header = tw.div`
+  flex flex-col md:(flex-row items-center) 
+  justify-between items-start
+`;
+
+const ClearButton = tw.button`
+  font-m-r cursor-pointer
+  border-none
+  bg-transparent
+  underline
 `;
 
 const Title = tw.h1`
-  font-xxl-b text-green
+  font-xxxl-b text-green
 `;
 
 const Contents = tw.div`
-  flex flex-col gap-8
+  flex flex-col gap-8 
 `;
 
 const InputBox = tw.div`
-  flex items-center gap-8
+  flex flex-col md:flex-row gap-8
 `;
 
 const MortgageType = tw.div`

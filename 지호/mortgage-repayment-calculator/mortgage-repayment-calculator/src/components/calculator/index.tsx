@@ -6,7 +6,7 @@ const Calculator = () => {
   return (
     <Wrapper>
       <InputSection />
-      <ResultSection />
+      <ResultSection monthlyRepayment={0} totalRepayment={0} />
     </Wrapper>
   );
 };
