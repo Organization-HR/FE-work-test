@@ -29,6 +29,9 @@ Users should be able to:
 ### 스크린샷
 
 ![](./mortgage-repayment-calculator/public/design/screenshot1.png)
+![](./mortgage-repayment-calculator/public/design/screenshot2.png)
+![](./mortgage-repayment-calculator/public/design/screenshot3.png)
+![](./mortgage-repayment-calculator/public/design/screenshot4.png)
 
 ### Links
 
