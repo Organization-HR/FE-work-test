@@ -1,5 +1,6 @@
 import tw from "twin.macro";
 import { IllustrationEmpty } from "../illustration";
+import { truncateDecimal } from "../../utils/string";
 
 interface ResultSectionProps {
   monthlyRepayment?: number;
@@ -24,13 +25,19 @@ const ResultSection = ({
             <Repayments>
               <SubHead>Your monthly repayments</SubHead>
               <MonthlyRepayment>
-                {monthlyRepayment ? `£${monthlyRepayment}` : "0"}
+                {monthlyRepayment
+                  ? `£${truncateDecimal(monthlyRepayment.toString())}`
+                  : "0"}
               </MonthlyRepayment>
             </Repayments>
             <Divider />
             <TotalRepay>
               <SubHead>Total you'll repay over the term</SubHead>
-              <TotalRepayment>{totalRepayment}</TotalRepayment>
+              <TotalRepayment>
+                {totalRepayment
+                  ? `£${truncateDecimal(totalRepayment.toString())}`
+                  : "0"}
+              </TotalRepayment>
             </TotalRepay>
           </Contents>
         </>
@@ -81,10 +88,12 @@ const SubHead = tw.div`
 
 const MonthlyRepayment = tw.div`
   font-xxxxl-b text-yellow
+  overflow-hidden whitespace-nowrap overflow-ellipsis
 `;
 
 const TotalRepayment = tw.div`
   font-xxl-b text-white
+  overflow-hidden whitespace-nowrap overflow-ellipsis
 `;
 
 const TotalRepay = tw.div`

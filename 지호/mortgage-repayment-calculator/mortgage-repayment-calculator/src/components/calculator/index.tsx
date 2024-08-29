@@ -21,16 +21,19 @@ const Calculator = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const onlyNums = formatMoney(e.target.value);
+    setMortgageAmountError(false);
     setMortgageAmount(onlyNums);
   };
 
   const handleChangeMortgageTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
     const onlyNums = formatNumber(e.target.value);
+    setMortgageTermError(false);
     setMortgageTerm(onlyNums);
   };
 
   const handleChangeInterestRate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const onlyNums = formatPercent(e.target.value);
+    setInterestRateError(false);
     setInterestRate(onlyNums);
   };
 
@@ -38,6 +41,7 @@ const Calculator = () => {
     const newChecked = new Array(checkedRadio.length).fill(false);
     newChecked[index] = true;
     setCheckedRadio(newChecked);
+    setCheckedRadioError(false);
   };
 
   const clearInput = () => {
@@ -64,13 +68,7 @@ const Calculator = () => {
     setCheckedRadioError(false);
   };
 
-  const calculateMonthlyRepayment = () => {
-    const monthlyInterestRate = Number(interestRate) / 100 / 12;
-    const totalPayments = Number(mortgageTerm) * 12;
-    const monthlyPayment =
-      (Number(mortgageAmount.replace(/,/g, "")) * monthlyInterestRate) /
-      (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
-
+  const checkError = () => {
     if (mortgageAmount === "") {
       setMortgageAmountError(true);
     }
@@ -83,6 +81,14 @@ const Calculator = () => {
     if (checkedRadio.length === 0) {
       setCheckedRadioError(true);
     }
+  };
+
+  const calculateMonthlyRepayment = () => {
+    const monthlyInterestRate = Number(interestRate) / 100 / 12;
+    const totalPayments = Number(mortgageTerm) * 12;
+    const monthlyPayment =
+      (Number(mortgageAmount.replace(/,/g, "")) * monthlyInterestRate) /
+      (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
 
     if (
       mortgageAmount &&
@@ -93,6 +99,8 @@ const Calculator = () => {
       setMonthlyRepayment(monthlyPayment);
       setTotalRepayment(monthlyPayment * totalPayments);
       clearInput();
+    } else {
+      checkError();
     }
   };
 

@@ -36,3 +36,11 @@ export const formatPercent = (value: string) => {
 
   return onlyNums;
 };
+
+export const truncateDecimal = (value: string) => {
+  const parts = value.split(".");
+  if (parts.length > 1 && parts[1].length > 5) {
+    return `${parts[0]}.${parts[1].slice(0, 5)}..`;
+  }
+  return value;
+};

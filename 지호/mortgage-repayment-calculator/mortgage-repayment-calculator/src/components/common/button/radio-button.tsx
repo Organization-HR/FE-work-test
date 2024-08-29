@@ -23,12 +23,12 @@ interface WrapperProps {
 const Wrapper = styled.div<WrapperProps>(({ checked }) => [
   tw`
   flex items-center gap-10 pl-11 pr-12 py-2 min-w-148 min-h-40
-  border-solid border border-green rounded-4 transition-colors duration-300
+  border-solid border border-green rounded-4
   font-l-b cursor-pointer
 
 
 `,
-  checked && tw`border-yellow bg-yellow bg-opacity-40`,
+  checked && tw`border-solid border-2 border-yellow bg-yellow bg-opacity-40`,
 ]);
 
 const Text = tw.div` 
