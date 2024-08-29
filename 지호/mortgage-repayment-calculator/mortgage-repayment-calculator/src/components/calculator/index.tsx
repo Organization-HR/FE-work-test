@@ -35,31 +35,35 @@ const Calculator = () => {
     setCheckedRadio(newChecked);
   };
 
-  const clearResult = () => {
+  const clearInput = () => {
     setMortgageAmount("");
     setMortgageTerm("");
     setInterestRate("");
     setCheckedRadio([]);
   };
 
+  const clearResult = () => {
+    setMortgageAmount("");
+    setMortgageTerm("");
+    setInterestRate("");
+    setCheckedRadio([]);
+    setMonthlyRepayment(0);
+    setTotalRepayment(0);
+  };
+
   const calculateMonthlyRepayment = () => {
-    const monthlyInterestRate = interestRate / 100 / 12;
-    const totalPayments = mortgageTerm * 12;
+    const monthlyInterestRate = Number(interestRate) / 100 / 12;
+    const totalPayments = Number(mortgageTerm) * 12;
     const monthlyPayment =
-      (mortgageAmount * monthlyInterestRate) /
+      (Number(mortgageAmount.replace(/,/g, "")) * monthlyInterestRate) /
       (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
     setMonthlyRepayment(monthlyPayment);
     setTotalRepayment(monthlyPayment * totalPayments);
-    clearResult();
+    clearInput();
   };
 
   return (
     <Wrapper>
-      <div>
-        {mortgageAmount}
-        {mortgageTerm}
-        {interestRate}
-      </div>
       <InputSection
         mortgageAmount={mortgageAmount}
         mortgageTerm={mortgageTerm}
@@ -70,6 +74,7 @@ const Calculator = () => {
         checkedRadio={checkedRadio}
         handleCheckedRadio={handleCheckedRadio}
         calculateMonthlyRepayment={calculateMonthlyRepayment}
+        clearResult={clearResult}
       />
       <ResultSection
         monthlyRepayment={monthlyRepayment}

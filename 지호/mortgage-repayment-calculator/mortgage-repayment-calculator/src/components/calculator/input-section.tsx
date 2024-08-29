@@ -15,6 +15,7 @@ interface InputSectionProps {
   checkedRadio: boolean[];
   handleCheckedRadio: (index: number) => void;
   calculateMonthlyRepayment: () => void;
+  clearResult: () => void;
 }
 
 const InputSection = ({
@@ -27,12 +28,13 @@ const InputSection = ({
   checkedRadio,
   handleCheckedRadio,
   calculateMonthlyRepayment,
+  clearResult,
 }: InputSectionProps) => {
   return (
     <Wrapper>
       <Header>
         <Title>Mortgage Calculator</Title>
-        <ClearButton>Clear All</ClearButton>
+        <ClearButton onClick={clearResult}>Clear All</ClearButton>
       </Header>
       <Contents>
         <TextField
@@ -72,6 +74,12 @@ const InputSection = ({
         <ButtonBox>
           <Button
             icon={<IconCalculator />}
+            disabled={
+              !mortgageAmount ||
+              !mortgageTerm ||
+              !interestRate ||
+              !checkedRadio.some(Boolean)
+            }
             text="Calculate Repayments"
             onClick={calculateMonthlyRepayment}
           />

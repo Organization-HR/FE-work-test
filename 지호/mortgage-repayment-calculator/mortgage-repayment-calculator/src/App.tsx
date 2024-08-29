@@ -10,7 +10,7 @@ const App = () => {
 };
 
 const Wrapper = tw.div`
-  flex items-center justify-center h-screen
+  flex items-center justify-center md:h-screen
 `;
 
 export default App;
