@@ -16,6 +16,10 @@ interface InputSectionProps {
   handleCheckedRadio: (index: number) => void;
   calculateMonthlyRepayment: () => void;
   clearResult: () => void;
+  mortgageAmountError: boolean;
+  mortgageTermError: boolean;
+  interestRateError: boolean;
+  checkedRadioError: boolean;
 }
 
 const InputSection = ({
@@ -29,6 +33,10 @@ const InputSection = ({
   handleCheckedRadio,
   calculateMonthlyRepayment,
   clearResult,
+  mortgageAmountError,
+  mortgageTermError,
+  interestRateError,
+  checkedRadioError,
 }: InputSectionProps) => {
   return (
     <Wrapper>
@@ -43,14 +51,16 @@ const InputSection = ({
           textfieldType="left"
           value={mortgageAmount}
           handleChange={handleChangeMortgageAmount}
+          error={mortgageAmountError}
         />
         <InputBox>
           <TextField
             title="Mortgage Term"
-            label="Year"
+            label="years"
             textfieldType="right"
             value={mortgageTerm}
             handleChange={handleChangeMortgageTerm}
+            error={mortgageTermError}
           />
           <TextField
             title="Interest Rate"
@@ -58,6 +68,7 @@ const InputSection = ({
             textfieldType="right"
             value={interestRate}
             handleChange={handleChangeInterestRate}
+            error={interestRateError}
           />
         </InputBox>
         <MortgageType>
@@ -70,16 +81,17 @@ const InputSection = ({
               text={item}
             />
           ))}
+          {checkedRadioError && <ErrorText>This field is required</ErrorText>}
         </MortgageType>
         <ButtonBox>
           <Button
             icon={<IconCalculator />}
-            disabled={
-              !mortgageAmount ||
-              !mortgageTerm ||
-              !interestRate ||
-              !checkedRadio.some(Boolean)
-            }
+            // disabled={
+            //   !mortgageAmount ||
+            //   !mortgageTerm ||
+            //   !interestRate ||
+            //   !checkedRadio.some(Boolean)
+            // }
             text="Calculate Repayments"
             onClick={calculateMonthlyRepayment}
           />
@@ -127,6 +139,10 @@ const TypeTitle = tw.div`
 
 const ButtonBox = tw.div`
   flex mt-8
+`;
+
+const ErrorText = tw.div`
+  font-m-b text-red
 `;
 
 export default InputSection;

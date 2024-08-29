@@ -22,7 +22,7 @@ const Wrapper = styled.button(({ disabled }) => [
   px-27 py-14 flex-center h-48
   rounded-24 bg-yellow clickable border-solid border-none
   font-m-2b text-green
-  disabled:(bg-gray-400 border-solid border-gray-400 non-clickable)
+  disabled:(bg-gray-400 border-solid border-gray-400)
     `,
 
   css`

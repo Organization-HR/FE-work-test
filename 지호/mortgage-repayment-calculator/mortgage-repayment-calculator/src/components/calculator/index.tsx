@@ -12,6 +12,11 @@ const Calculator = () => {
   const [monthlyRepayment, setMonthlyRepayment] = useState(0);
   const [totalRepayment, setTotalRepayment] = useState(0);
 
+  const [mortgageAmountError, setMortgageAmountError] = useState(false);
+  const [mortgageTermError, setMortgageTermError] = useState(false);
+  const [interestRateError, setInterestRateError] = useState(false);
+  const [checkedRadioError, setCheckedRadioError] = useState(false);
+
   const handleChangeMortgageAmount = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -40,6 +45,10 @@ const Calculator = () => {
     setMortgageTerm("");
     setInterestRate("");
     setCheckedRadio([]);
+    setMortgageAmountError(false);
+    setMortgageTermError(false);
+    setInterestRateError(false);
+    setCheckedRadioError(false);
   };
 
   const clearResult = () => {
@@ -49,6 +58,10 @@ const Calculator = () => {
     setCheckedRadio([]);
     setMonthlyRepayment(0);
     setTotalRepayment(0);
+    setMortgageAmountError(false);
+    setMortgageTermError(false);
+    setInterestRateError(false);
+    setCheckedRadioError(false);
   };
 
   const calculateMonthlyRepayment = () => {
@@ -57,9 +70,30 @@ const Calculator = () => {
     const monthlyPayment =
       (Number(mortgageAmount.replace(/,/g, "")) * monthlyInterestRate) /
       (1 - Math.pow(1 + monthlyInterestRate, -totalPayments));
-    setMonthlyRepayment(monthlyPayment);
-    setTotalRepayment(monthlyPayment * totalPayments);
-    clearInput();
+
+    if (mortgageAmount === "") {
+      setMortgageAmountError(true);
+    }
+    if (mortgageTerm === "") {
+      setMortgageTermError(true);
+    }
+    if (interestRate === "") {
+      setInterestRateError(true);
+    }
+    if (checkedRadio.length === 0) {
+      setCheckedRadioError(true);
+    }
+
+    if (
+      mortgageAmount &&
+      mortgageTerm &&
+      interestRate &&
+      checkedRadio.some(Boolean)
+    ) {
+      setMonthlyRepayment(monthlyPayment);
+      setTotalRepayment(monthlyPayment * totalPayments);
+      clearInput();
+    }
   };
 
   return (
@@ -75,6 +109,10 @@ const Calculator = () => {
         handleCheckedRadio={handleCheckedRadio}
         calculateMonthlyRepayment={calculateMonthlyRepayment}
         clearResult={clearResult}
+        mortgageAmountError={mortgageAmountError}
+        mortgageTermError={mortgageTermError}
+        interestRateError={interestRateError}
+        checkedRadioError={checkedRadioError}
       />
       <ResultSection
         monthlyRepayment={monthlyRepayment}

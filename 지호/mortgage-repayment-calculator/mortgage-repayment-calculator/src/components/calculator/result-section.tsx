@@ -50,7 +50,7 @@ const ResultSection = ({
 
 const Wrapper = tw.div`
   flex flex-col bg-green p-24 gap-12 justify-center
-  md:(rounded-br-24 rounded-bl-24 rounded-tr-24 w-full)
+  md:(rounded-br-24 rounded-bl-24 rounded-tr-24 w-full max-w-430)
 `;
 
 const Title = tw.div`
