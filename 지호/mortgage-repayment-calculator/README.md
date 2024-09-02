@@ -33,7 +33,7 @@
 
 ### 링크
 
-- 원본문제 URL: [Question URL](https://www.frontendmentor.io/challenges/mortgage-repayment-calculator-Galx1LXK73)
+- 원본문제 URL: [Question by FrontEnd Mentor](https://www.frontendmentor.io/challenges/mortgage-repayment-calculator-Galx1LXK73)
 
 ## 나의-풀이
 
@@ -49,10 +49,21 @@
 
 1. 공통 컴포넌트 개발
 
-### Useful resources
+- 버튼 2종과 텍스트 필드를 공통컴포넌트로 개발하였습니다.
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
+2. 사용자 입력을 처리하는 폼 컴포넌트 구현
+
+- 사용자의 입력을 직접 계산하는 계산기 컴포넌트를 구현하였습니다.
+- 입력된 데이터를 기반으로 계산을 하고, 입력값 종륲 별로 알맞은 형식으로 입력되게 설정하였습니다.
+
+3. 폼 유효성 검사 기능 추가
+
+- 필드가 비어있는 경우 사용자에게 오류 메시지를 표시합니다.
+
+4. 반응형 디자인을 위한 CSS 스타일링 적용
+
+- 웹 뷰와 모바일 뷰에 맞춰 레이아웃을 조정하고, 모바일 친화 디자인을 구현하였습니다.
 
 ## Author
 
-- Website - [Lee Jiho](https://www.your-site.com)
+- Website - [Lee Jiho](https://url.kr/7rv7ap)
