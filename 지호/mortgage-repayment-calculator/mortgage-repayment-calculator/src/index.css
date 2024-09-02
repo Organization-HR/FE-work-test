@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/public/fonts/static/PlusJakartaSans-Bold.ttf") format("ttf");
+  font-weight: 700;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: "PlusJakartaSans";
+  src: url("/public/fonts/PlusJakartaSans-Medium.ttf") format("ttf");
+  font-weight: 500;
+  font-style: normal;
+}
+
+:root {
+  font-family: "PlusJakartaSans", system-ui, Avenir, Helvetica, Arial,
+    sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #0f1c24;
+  background-color: #e6f7ff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+}
