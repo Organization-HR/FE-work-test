@@ -37,13 +37,13 @@
 
 ## 나의-풀이
 
-### Built with
+### 사용 기술
 
-- Vite
-- [React](https://reactjs.org/) - JS library
-- Tailwind-css
-- Emotion
-- twin.macro
+- [Vite](https://vitejs.dev/) - 빠른 프론트엔드 빌드 도구
+- [React](https://reactjs.org/) - 유저 인터페이스 구축용 JS library
+- [Twin.macro](https://github.com/ben-rogerson/twin.macro?tab=readme-ov-file) - Tailwind와 css-in-js 라이브러리를 함께 사용 할 수 있게 하는 도구
+- [Tailwind-css](https://tailwindcss.com/) - 유틸리티 기반 CSS 프레임워크
+- [Emotion](https://emotion.sh/docs/introduction) - Css-in-JS 라이브러리
 
 ### 구현 설명
 
