@@ -1,13 +1,21 @@
-import React from "react";
+import { FieldErrors, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
 
 interface InputProps {
   title: string;
   iconLocation: "left" | "right";
   iconContent: string;
+  register: UseFormRegister<any>;
+  errors: FieldErrors<any>;
 }
 
-function Input({ title, iconLocation, iconContent }: InputProps) {
+function Input({
+  title,
+  iconLocation,
+  iconContent,
+  register,
+  errors,
+}: InputProps) {
   return (
     <InputContainer>
       <InputTitle>{title}</InputTitle>
@@ -16,12 +24,21 @@ function Input({ title, iconLocation, iconContent }: InputProps) {
           {iconLocation === "left" && (
             <IconContentSpan>{iconContent}</IconContentSpan>
           )}
-          <CustomInput />
+          <CustomInput
+            {...register(title, {
+              required: "This field is required",
+              validate: (value) =>
+                !isNaN(Number(value)) || "Only numbers are allowed",
+            })}
+          />
           {iconLocation === "right" && (
             <IconContentSpan>{iconContent}</IconContentSpan>
           )}
         </InputWrapper>
       </InputLabel>
+      {errors[title] && (
+        <ErrorMessage>{errors[title]?.message?.toString()}</ErrorMessage>
+      )}
     </InputContainer>
   );
 }
@@ -29,22 +46,33 @@ function Input({ title, iconLocation, iconContent }: InputProps) {
 export default Input;
 
 const InputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   flex: 1;
+  gap: 10px;
 `;
 
-const InputTitle = styled.h2``;
+const InputTitle = styled.h2`
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+`;
 
 const InputLabel = styled.label``;
 
 const InputWrapper = styled.div`
   display: flex;
-  align-items: stretch; /* 자식 요소의 높이를 동일하게 맞춤 */
+  align-items: stretch;
 `;
 
 const CustomInput = styled.input`
   border: 1px solid hsl(203, 41%, 72%);
-  box-sizing: border-box; /* padding 포함 높이를 맞추기 위해 사용 */
+  box-sizing: border-box;
   flex: 1;
+  padding: 10px;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const IconContentSpan = styled.span`
@@ -53,6 +81,13 @@ const IconContentSpan = styled.span`
   justify-content: center;
   padding: 10px;
   background-color: hsl(203, 41%, 72%);
-  line-height: 1.5; /* input과 동일한 line-height를 설정 */
+  line-height: 1.5;
   box-sizing: border-box;
+`;
+
+const ErrorMessage = styled.p`
+  padding: 0;
+  margin: 0;
+  color: red;
+  font-size: 12px;
 `;

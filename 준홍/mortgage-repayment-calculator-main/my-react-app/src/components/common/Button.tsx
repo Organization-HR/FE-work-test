@@ -1,4 +1,3 @@
-import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 interface ButtonProps {
@@ -8,7 +7,7 @@ interface ButtonProps {
 
 function Button({ icon, content }: ButtonProps) {
   return (
-    <ButtonWrapper>
+    <ButtonWrapper type="submit">
       {icon && <ButtonIcon src={icon} alt={"calculator"} />}
       <ButtonContent>{content}</ButtonContent>
     </ButtonWrapper>
@@ -17,10 +16,11 @@ function Button({ icon, content }: ButtonProps) {
 
 export default Button;
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled.button`
+  border: none;
   width: 50%;
   border-radius: 50px;
-  padding: 20px;
+  padding: 10px 20px;
   display: flex;
   align-items: center;
   justify-content: center;

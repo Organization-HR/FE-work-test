@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 function ResultPage() {
@@ -13,11 +12,12 @@ function ResultPage() {
       <RepayInfoWrapper>
         <RepayWrapper>
           <RepayTitle>Your monthly repayments</RepayTitle>
-          <RepayPrice>$1,797.74</RepayPrice>
+          <MonthRepayPrice>£1,797.74</MonthRepayPrice>
         </RepayWrapper>
+        <HrLine />
         <RepayWrapper>
           <RepayTitle>Total you'll repay over the term</RepayTitle>
-          <RepayPrice>$539,322.94</RepayPrice>
+          <RepayTermPrice>£539,322.94</RepayTermPrice>
         </RepayWrapper>
       </RepayInfoWrapper>
     </ResultPageWrapper>
@@ -29,19 +29,30 @@ export default ResultPage;
 const ResultPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 `;
 
 const ResultPageTitle = styled.h3`
+  margin: 0;
   color: white;
 `;
 
 const ResultPageContent = styled.p`
-  color: gray;
+  margin: 0;
+  font-size: 14px;
+  color: hsl(200, 24%, 40%);
 `;
 
 const RepayInfoWrapper = styled.div`
-  background-color: brown;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px;
+  background-color: hsl(
+    200.99999999999997,
+    21.73913043478261%,
+    18.03921568627451%
+  );
   border-radius: 20px;
   border-top: 3px solid yellow;
 `;
@@ -49,12 +60,30 @@ const RepayInfoWrapper = styled.div`
 const RepayWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 10px;
+`;
+
+const HrLine = styled.hr`
+  width: 100%;
+  border: none;
+  height: 1px;
+  background-color: gray;
 `;
 
 const RepayTitle = styled.h4`
-  color: gray;
+  margin: 0;
+  font-size: 14px;
+  color: hsl(200, 24%, 40%);
 `;
 
-const RepayPrice = styled.p`
+const MonthRepayPrice = styled.h4`
+  margin: 0;
+  font-size: 50px;
+  color: yellow;
+`;
+
+const RepayTermPrice = styled.p`
+  font-size: 20px;
+  margin: 0;
   color: white;
 `;

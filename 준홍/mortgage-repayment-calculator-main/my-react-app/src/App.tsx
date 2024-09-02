@@ -1,41 +1,52 @@
 import styled from "styled-components";
 import "./App.css";
-import Title from "./components/common/Title";
-import Input from "./components/common/Input";
-import RadioButton from "./components/common/RadioButton";
-import Button from "./components/common/Button";
-import calculatorImg from "./assets/images/icon-calculator.svg";
-import EmptyPage from "./components/pages/result/EmptyPage";
 import ResultPage from "./components/pages/result/ResultPage";
+import CalculatorPage from "./components/pages/calculator/CalculatorPage";
+import { useForm } from "react-hook-form";
+import EmptyPage from "./components/pages/result/EmptyPage";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors, isValid },
+  } = useForm({
+    mode: "onChange",
+  });
+  const mortgageAmount = watch("Mortgage Amount");
+  const mortgageTerm = watch("Mortgage Term");
+  const interestRate = watch("Interest Rate");
+
+  useEffect(() => {
+    if (mortgageAmount === "" || mortgageTerm === "" || interestRate === "") {
+      setIsSubmit(false);
+    }
+  }, [mortgageAmount, mortgageTerm, interestRate]);
+
+  const onSubmit = (data: any) => {
+    setIsSubmit(true);
+  };
+
+  const handleReset = () => {
+    setIsSubmit(false);
+    reset();
+  };
+
   return (
     <Background>
       <ContainerWrapper>
-        <InputConatainer>
-          <Title title="Mortgage Calculator" />
-          <Input title="Mortgage Amount" iconLocation="left" iconContent="$" />
-          <div style={{ width: "100%", display: "flex", flex: 1, gap: "40px" }}>
-            <Input
-              title="Mortgage Amount"
-              iconLocation="right"
-              iconContent="years"
-            />
-            <Input
-              title="Mortgage Amount"
-              iconLocation="right"
-              iconContent="%"
-            />
-          </div>
-          <RadioButton
-            title="Mortgage Type"
-            itemsList={["Repayment", "interest Only"]}
-          />
-          <Button icon={calculatorImg} content="Calculate Repayments" />
-        </InputConatainer>
+        <CalculatorPage
+          register={register}
+          handleSubmit={handleSubmit(onSubmit)}
+          errors={errors}
+          reset={handleReset}
+        />
         <ResultContainer>
-          {/* <EmptyPage /> */}
-          <ResultPage />
+          {isSubmit && isValid ? <ResultPage /> : <EmptyPage />}
         </ResultContainer>
       </ContainerWrapper>
     </Background>
@@ -62,14 +73,6 @@ const ContainerWrapper = styled.div`
   border-radius: 30px;
   display: flex;
   overflow: hidden; /* 추가 */
-`;
-
-const InputConatainer = styled.div`
-  width: 60%;
-  display: flex;
-  flex-direction: column;
-  padding: 30px;
-  border-radius: 30px 0 0 30px;
 `;
 
 const ResultContainer = styled.div`

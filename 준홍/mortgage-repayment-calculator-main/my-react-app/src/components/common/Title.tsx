@@ -1,15 +1,15 @@
-import React from "react";
 import styled from "styled-components";
 
 interface TitleProps {
   title: string;
+  reset: () => void;
 }
 
-function Title({ title }: TitleProps) {
+function Title({ title, reset }: TitleProps) {
   return (
     <TitleWrapper>
       <TitleName>{title}</TitleName>
-      <ClearAllButton>Clear All</ClearAllButton>
+      <ClearAllButton onClick={reset}>Clear All</ClearAllButton>
     </TitleWrapper>
   );
 }

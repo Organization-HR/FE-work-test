@@ -1,4 +1,3 @@
-import React from "react";
 import emptyImg from "../../../assets/images/illustration-empty.svg";
 import styled from "styled-components";
 
