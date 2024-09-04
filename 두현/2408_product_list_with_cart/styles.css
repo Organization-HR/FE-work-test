@@ -1,0 +1,30 @@
+.page-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#item-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px
+  }
+
+.item-card__container {
+    width: 250px;
+    line-height: 0.2;
+}
+
+.item-card__container img {
+    max-width: 100%;
+}
+
+.item-card__container .item-card__category {
+    color: gray
+}
+
+.cost-element {
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}

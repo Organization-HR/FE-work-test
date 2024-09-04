@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Frontend Mentor | Product list with cart</title>
+</head>
+<body>
+  <h1>Desserts</h1>
+  <div class="page-container">
+    <div id="item-list"></div>
+    <div id="cart"></div>
+  </div>
+  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
+    Coded by <a href="https://github.com/ldhldh07">ldhldh07</a>.
+  </div>
+  
+  <script>
+    const itemListElement = document.getElementById('item-list');
+    
+    async function loadItems() {
+      try {
+        const response = await fetch('./data.json');
+        if (!response.ok) {
+          throw new Error('fetch 에러');
+        }
+        const itemListData = await response.json();
+        
+        itemListData.forEach(item => {
+          const itemCardContainer = document.createElement('div');
+          itemCardContainer.className = 'item-card__container';
+          
+          let counts = 0;
+
+          const imageContainer = document.createElement('div');
+          imageContainer.className = 'item-card__image-container';
+
+          const img = document.createElement('img');
+          img.src = item.image.desktop;
+          img.alt = item.title;
+          img.className = 'item-card__image';
+          imageContainer.appendChild(img);
+
+          const controlsContainer = document.createElement('div');
+          controlsContainer.className = 'item-card__controls';
+
+          const minusButton = document.createElement('button');
+          minusButton.className = 'minus';
+          minusButton.style.display = 'none';
+          minusButton.textContent = '-';
+
+          const plusButton = document.createElement('button');
+          plusButton.className = 'plus';
+          plusButton.style.display = 'none';
+          plusButton.textContent = '+';
+
+          const quantitySpan = document.createElement('span');
+          quantitySpan.className = 'quantity';
+          quantitySpan.style.display = 'none';
+          quantitySpan.textContent = counts;
+
+          const addButton = document.createElement('button');
+          addButton.className = 'add-to-cart';
+          addButton.textContent = 'Add to Cart';
+
+          controlsContainer.appendChild(minusButton);
+          controlsContainer.appendChild(quantitySpan);
+          controlsContainer.appendChild(plusButton);
+          controlsContainer.appendChild(addButton);
+
+          imageContainer.appendChild(controlsContainer);
+
+          const category = document.createElement('p');
+          category.className = 'item-card__category';
+          category.textContent = item.category;
+
+          const title = document.createElement('h4');
+          title.className = 'item-card__title';
+          title.textContent = item.name;
+
+          const price = document.createElement('p');
+          price.className = 'item-card__price';
+          price.textContent = `$${item.price.toFixed(2)}`;
+
+          itemCardContainer.appendChild(imageContainer);
+          itemCardContainer.appendChild(category);
+          itemCardContainer.appendChild(title);
+          itemCardContainer.appendChild(price);
+
+          addButton.addEventListener('click', () => {
+            addButton.style.display = 'none';
+            minusButton.style.display = 'inline-block';
+            plusButton.style.display = 'inline-block';
+            quantitySpan.style.display = 'inline-block';
+            counts += 1;
+            quantitySpan.textContent = counts;
+
+            if (!cartState[item.name]) {
+              cartState[item.name] = { name: item.name, price: item.price, quantity: 1 };
+            } else {
+              counts = 1
+              cartState[item.name].quantity = counts;
+              quantitySpan.textContent = counts;
+            }
+            updateCart();
+          });
+
+          plusButton.addEventListener('click', () => {
+            counts += 1;
+            quantitySpan.textContent = counts;
+            cartState[item.name].quantity = counts;
+            updateCart();
+          });
+
+          minusButton.addEventListener('click', () => {
+            if (counts === 1) {
+              minusButton.style.display = 'none';
+              plusButton.style.display = 'none';
+              quantitySpan.style.display = 'none';
+              addButton.style.display = 'inline-block';
+              counts = 0;
+              delete cartState[item.name];
+            } else {
+              counts -= 1;
+              quantitySpan.textContent = counts;
+              cartState[item.name].quantity = counts;
+            }
+            updateCart();
+          });
+
+          itemListElement.appendChild(itemCardContainer);
+        });
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    /**
+     * 카트
+     **/
+    const cartElement = document.getElementById("cart");
+
+    let cartState = {};
+
+    function updateCart() {
+      cartElement.innerHTML = '';
+      const cartItemContainer = document.createElement('div');
+      const cartTitle = document.createElement('p');
+      
+      const totalCartCount = Object.values(cartState).reduce((acc, item) => acc + item.quantity, 0);
+      
+      cartTitle.textContent = `Your Cart (${totalCartCount})`;
+      cartItemContainer.appendChild(cartTitle);
+
+      Object.values(cartState).forEach(addedCartItem => {
+        if(addedCartItem.quantity !== 0) {
+          const cartItemElement = document.createElement('div');
+          cartItemElement.className = 'cart-item';
+
+          const itemName = document.createElement('p');
+          itemName.textContent = addedCartItem.name;
+
+          const itemQuantity = document.createElement('span');
+          itemQuantity.textContent = `${addedCartItem.quantity}x`;
+
+          const itemPrice = document.createElement('span');
+          itemPrice.textContent = `$${addedCartItem.price.toFixed(2)} ($${(addedCartItem.quantity * addedCartItem.price).toFixed(2)})`;
+
+          const removeButton = document.createElement('button');
+          removeButton.className = 'remove-item';
+          removeButton.textContent = 'x';
+          removeButton.setAttribute('data-name', addedCartItem.name);
+
+          cartItemElement.appendChild(itemName);
+          cartItemElement.appendChild(itemQuantity);
+          cartItemElement.appendChild(itemPrice);
+          cartItemElement.appendChild(removeButton);
+
+          cartItemContainer.appendChild(cartItemElement);
+        }
+      });
+      cartElement.appendChild(cartItemContainer);
+
+      const removeButtons = cartItemContainer.querySelectorAll('.remove-item');
+      removeButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+          const itemName = event.target.getAttribute('data-name');
+          cartState[itemName].quantity = 0;
+          
+          const itemCardContainer = [...itemListElement.children].find(container => 
+            container.querySelector('.item-card__title').textContent === itemName
+          );
+
+          if (itemCardContainer) {
+            const addButton = itemCardContainer.querySelector('.add-to-cart');
+            const minusButton = itemCardContainer.querySelector('.minus');
+            const plusButton = itemCardContainer.querySelector('.plus');
+            const quantitySpan = itemCardContainer.querySelector('.quantity');
+
+            quantitySpan.textContent = 0;
+            addButton.style.display = 'inline-block';
+            minusButton.style.display = 'none';
+            plusButton.style.display = 'none';
+            quantitySpan.style.display = 'none';
+          }
+          updateCart();
+        });
+      });
+
+      const totalCost = Object.values(cartState).reduce((acc, cartItem) => acc + cartItem.quantity * cartItem.price, 0);
+      const costElement = document.createElement('div');
+      costElement.className = 'cost-element'; 
+
+      const totalCostLabel = document.createElement('span');
+      totalCostLabel.innerText = "Order Total: ";
+
+      const totalCostResult = document.createElement('span');
+      totalCostResult.innerText = `$${totalCost.toFixed(2)}`;
+
+      costElement.appendChild(totalCostLabel);
+      costElement.appendChild(totalCostResult);
+      cartElement.appendChild(costElement);
+
+      const submitButtonContainer = document.createElement('div');
+      const submitButton = document.createElement('button');
+      submitButton.className = "cart__submit-button";
+      submitButton.textContent = "Confirm Order"
+
+      submitButtonContainer.appendChild(submitButton)
+      
+      cartElement.appendChild(submitButtonContainer)
+
+    }
+
+    loadItems();
+    updateCart();
+  </script>
+</body>
+</html>
