@@ -8,54 +8,72 @@
   
   <title>Frontend Mentor | Mortgage repayment calculator</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <div class="container">
+    <div class="calculator-area">
+      <header class="calculator-area__header">
+        <h2>
+          Mortgage Calculator
+        </h2>
+        <span id="clear-all" class="calculator-area__header--clear">Clear All</span>
+      </header>
+      <form id="calculator-form">
+        <div class="calculator-form__field-area">
+            <label class="calculator-form__label" for="mortgage-amount">Mortgage Amount</label>
+            <div class="calculator-form__input-group">
+                <span class="calculator-form__input-criteria">£</span>
+                <input type="text" id="mortgage-amount">
+            </div>
+        </div>
 
-  Mortgage Calculator
-  Clear All
+        <div class="calculator-form__term-and-rate">
+            <div class="calculator-form__field-area">
+                <label for="mortgage-term" class="calculator-form__label">Mortgage Term</label>
+                <div class="calculator-form__input-group">
+                    <input type="text" id="mortgage-term">
+                    <span class="calculator-form__input-criteria">years</span>
+                </div>
+            </div>
 
-  Mortgage Amount
+            <div class="calculator-form__field-area">
+                <label for="interest-rate" class="calculator-form__label">Interest Rate</label>
+                <div class="calculator-form__input-group">
+                    <input type="text" id="interest-rate">
+                    <span class="calculator-form__input-criteria">%</span>
+                </div>
+            </div>
+        </div>
 
-  Mortgage Term
+        <div class="calculator-form__field-area">
+          <label class="calculator-form__label">Mortgage Type</label>
+          <div class="radio-group">
+              <label class="calculater_form__radio-button">
+                  <input type="radio" name="mortgage-type" value="repayment" checked>
+                  <span>Repayment</span>
+              </label>
+              <label class="calculater_form__radio-button">
+                  <input type="radio" name="mortgage-type" value="interest-only">
+                  <span>Interest Only</span>
+              </label>
+          </div>
+      </div>
 
-  Interest Rate
+        <button type="submit" class="calculator-form__submit-button">
+          <img src="./assets/images/icon-calculator.svg" alt="Calculator Icon" class="button-icon">
+          Calculate Repayments
+        </button>
+    </form>
+    </div>
+    <div class="result-area">
 
-  Mortgage Type
-  Repayment
-  Interest Only
-
-  Calculate Repayments
-
-  <!-- Empty results start -->
-
-  Results shown here
-
-  Complete the form and click “calculate repayments” to see what 
-  your monthly repayments would be.
-
-  <!-- Empty results end -->
-
-  <!-- Completed results start -->
-
-  Your results
-
-  Your results are shown below based on the information you provided. 
-  To adjust the results, edit the form and click “calculate repayments” again.
-
-  Your monthly repayments
-
-  Total you'll repay over the term
-
-  <!-- Completed results end -->
-  
+    </div>
+  </div>
   <div class="attribution">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
     Coded by <a href="#">Your Name Here</a>.
   </div>
+  <script src="script.js"></script>
 </body>
 </html>
