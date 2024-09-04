@@ -5,8 +5,14 @@ import CalculatorPage from "./components/pages/calculator/CalculatorPage";
 import { useForm } from "react-hook-form";
 import EmptyPage from "./components/pages/result/EmptyPage";
 import { useEffect, useState } from "react";
+import { calculateMortgage } from "./utils/mortgage";
+import { resultPaymentProps } from "./types/type";
 
 function App() {
+  const [result, setResult] = useState<resultPaymentProps>({
+    monthlyPayment: 0,
+    totalPayment: 0,
+  });
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const {
     register,
@@ -17,17 +23,24 @@ function App() {
   } = useForm({
     mode: "onChange",
   });
-  const mortgageAmount = watch("Mortgage Amount");
-  const mortgageTerm = watch("Mortgage Term");
-  const interestRate = watch("Interest Rate");
+  const mortgageAmount = watch("Mortgage Amount") || "";
+  const mortgageTerm = watch("Mortgage Term") || "";
+  const interestRate = watch("Interest Rate") || "";
 
   useEffect(() => {
-    if (mortgageAmount === "" || mortgageTerm === "" || interestRate === "") {
+    if (mortgageAmount || mortgageTerm || interestRate) {
       setIsSubmit(false);
     }
   }, [mortgageAmount, mortgageTerm, interestRate]);
 
   const onSubmit = (data: any) => {
+    setResult(
+      calculateMortgage({
+        mortgageAmount: Number(data["Mortgage Amount"]),
+        mortgageTerm: Number(data["Mortgage Term"]),
+        interestRate: Number(data["Interest Rate"]),
+      })
+    );
     setIsSubmit(true);
   };
 
@@ -46,7 +59,7 @@ function App() {
           reset={handleReset}
         />
         <ResultContainer>
-          {isSubmit && isValid ? <ResultPage /> : <EmptyPage />}
+          {isSubmit && isValid ? <ResultPage result={result} /> : <EmptyPage />}
         </ResultContainer>
       </ContainerWrapper>
     </Background>
@@ -72,7 +85,7 @@ const ContainerWrapper = styled.div`
   border: 1px solid black;
   border-radius: 30px;
   display: flex;
-  overflow: hidden; /* 추가 */
+  overflow: hidden;
 `;
 
 const ResultContainer = styled.div`

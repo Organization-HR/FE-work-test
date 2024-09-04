@@ -1,6 +1,8 @@
 import styled from "styled-components";
+import { resultPaymentProps } from "../../../types/type";
+import { formatNumber } from "../../../utils/mortgage";
 
-function ResultPage() {
+function ResultPage({ result }: { result: resultPaymentProps }) {
   return (
     <ResultPageWrapper>
       <ResultPageTitle>Your results</ResultPageTitle>
@@ -12,12 +14,16 @@ function ResultPage() {
       <RepayInfoWrapper>
         <RepayWrapper>
           <RepayTitle>Your monthly repayments</RepayTitle>
-          <MonthRepayPrice>£1,797.74</MonthRepayPrice>
+          <MonthRepayPrice>
+            £{formatNumber({ value: result.monthlyPayment })}
+          </MonthRepayPrice>
         </RepayWrapper>
         <HrLine />
         <RepayWrapper>
           <RepayTitle>Total you'll repay over the term</RepayTitle>
-          <RepayTermPrice>£539,322.94</RepayTermPrice>
+          <RepayTermPrice>
+            £{formatNumber({ value: result.totalPayment })}
+          </RepayTermPrice>
         </RepayWrapper>
       </RepayInfoWrapper>
     </ResultPageWrapper>
