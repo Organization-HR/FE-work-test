@@ -27,8 +27,15 @@ function Input({
           <CustomInput
             {...register(title, {
               required: "This field is required",
-              validate: (value) =>
-                !isNaN(Number(value)) || "Only numbers are allowed",
+              validate: (value) => {
+                if (value[0] === "0" && value.length > 0) {
+                  return "The first number cannot be 0";
+                }
+                if (isNaN(Number(value))) {
+                  return "Only numbers are allowed";
+                }
+                return true;
+              },
             })}
           />
           {iconLocation === "right" && (
